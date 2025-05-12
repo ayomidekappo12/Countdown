@@ -3,8 +3,7 @@ import "./globals.css";
 import Header from "./components/Header";
 import {Sora} from "next/font/google";
 import backgroundImage from "./assests/background.png"
-import { url } from "inspector";
-
+import Footer from "./components/Footer";
 
 
 const sora = Sora({
@@ -31,6 +30,7 @@ export default function RootLayout({
       <body className="w-full h-[100vh]" style={{backgroundImage: `url(${backgroundImage.src})`, backgroundSize:"cover", backgroundRepeat:"no-repeat", backgroundPosition:"center"}}>
         <Header/>
         {children}
+        <Footer/>
       </body>
     </html>
   );
