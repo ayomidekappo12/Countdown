@@ -4,9 +4,9 @@ import React from "react";
 import { SWRConfig } from "swr";
 import { fetcher } from "@/lib/utils";
 import { ErrorProvider } from "@/lib/ErrorHandlerProvider";
-import Header from "./Header";
+import Header from "./header";
 import { Toaster } from "@/components/ui/sonner";
-import Footer from "./Footer";
+import Footer from "./footer";
 
 import { LoadingIndicatorProvider } from "@/lib/LoadingIndicatorProvider";
 

@@ -37,7 +37,7 @@ const organizationSchema = {
   ],
   contactPoint: {
     "@type": "ContactPoint",
-    email: "hello@SynaraDev.com",
+    email: "synara.dev@gmail.com",
     contactType: "customer support",
   },
 };
@@ -50,8 +50,7 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en" className={fontClass}>
       <head>
-        {" "}
-        <Script
+        <script
           id="organization-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -59,24 +58,14 @@ export default function RootLayout({
           }}
         />
       </head>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
+      <body
+        className="w-full h-[100vh] bg-cover bg-no-repeat bg-center"
+        style={{
+          backgroundImage: "url(/images/background.png)",
+        }}
       >
-        <body
-          className="bg-white w-full h-[100vh]"
-          style={{
-            backgroundImage: "url(/images/background.png)",
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-          }}
-        >
-          <App>{children}</App>
-        </body>
-      </ThemeProvider>
+        <App>{children}</App>
+      </body>
     </html>
   );
 }
