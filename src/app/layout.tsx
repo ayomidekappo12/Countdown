@@ -1,15 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from "@/components/config/theme-provider";
 import App from "@/components/layouts/app";
-import Script from "next/script";
 import { Sora, Inter } from "next/font/google";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 
 const sora = Sora({
   variable: "--font-sora",
-  subsets: ["latin"],
+  subsets: ["latin"]
 });
 
 // Combined class name
@@ -31,9 +29,12 @@ const organizationSchema = {
   description:
     "SynaraDev Provide software development, designs and other technical service company owners and industries.",
   sameAs: [
-    "https://twitter.com/SynaraDev",
-    "https://linkedin.com/company/SynaraDev",
-    "https://www.instagram.com/SynaraDev",
+    "https://x.com/synaradev",
+    "https://www.linkedin.com/company/synaradev/",
+    "https://www.instagram.com/synaradev/",
+    "http://www.tiktok.com/@synaradev",
+    "https://www.youtube.com/@SynaraDev",
+    "https://web.facebook.com/SynaraDev/",
   ],
   contactPoint: {
     "@type": "ContactPoint",
@@ -59,7 +60,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="w-full h-[100vh] bg-cover bg-no-repeat bg-center"
+        className="w-full bg-cover bg-no-repeat bg-center"
         style={{
           backgroundImage: "url(/images/background.png)",
         }}

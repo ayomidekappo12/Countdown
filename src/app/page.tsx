@@ -1,4 +1,4 @@
-import CountdownComponent from "@/components/layouts/home/Countdown";
+import CountdownComponent from "@/components/layouts/home/countdown/Countdown";
 
 
 export default function Home() {

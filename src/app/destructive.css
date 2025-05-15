@@ -1,5 +1,5 @@
-@import "tailwindcss/preflight";
-@tailwind utilities;
+@import "tailwindcss";
+@import "tw-animate-css";
 
 
 .border-destructive {
