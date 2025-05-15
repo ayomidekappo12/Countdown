@@ -1,13 +1,13 @@
-import React from 'react'
-import Image from 'next/image'
+import CountdownComponent from "@/components/layouts/home/countdown/Countdown";
 
 
-const page = () => {
+export default function Home() {
   return (
-    <div>
-       
-    </div>
-  )
-}
+    <main className="flex flex-col min-h-screen items-center">
+      <CountdownComponent />
 
-export default page
+
+      <div className="mb-20 md:mb-32" />
+    </main>
+  );
+}
