@@ -11,9 +11,9 @@ import { motion } from "framer-motion";
 
 const Footer = () => {
   return (
-    <div className="w-full h-[100px] md:h-[150px] lg:h-[100px] flex items-center justify-center gap-[4px] md:gap-[8px] lg:gap-[4px]">
+    <div className="w-full flex items-center justify-center gap-5 md:gap-6 lg:gap-5">
       <motion.a
-        href=""
+        href="https://www.linkedin.com/company/synaradev/" target="_"
         whileHover={{
           y: [0, -4, 4, -4, 4, 0],
         }}
@@ -27,7 +27,7 @@ const Footer = () => {
       </motion.a>
 
       <motion.a
-        href=""
+        href="http://www.tiktok.com/@synaradev" target="_"
         whileHover={{
           x: [0, -4, 4, -4, 4, 0],
         }}
@@ -41,7 +41,7 @@ const Footer = () => {
       </motion.a>
 
       <motion.a
-        href=""
+        href="https://x.com/synaradev" target="_"
         whileHover={{
           x: [0, -4, 4, -4, 4, 0],
         }}
@@ -55,7 +55,7 @@ const Footer = () => {
       </motion.a>
 
       <motion.a
-        href=""
+        href="https://web.facebook.com/SynaraDev/" target="_"
         whileHover={{
           x: [0, -4, 4, -4, 4, 0],
         }}
@@ -69,7 +69,7 @@ const Footer = () => {
       </motion.a>
 
       <motion.a
-        href=""
+        href="https://www.youtube.com/@SynaraDev" target="_"
         whileHover={{
           x: [0, -4, 4, -4, 4, 0],
         }}

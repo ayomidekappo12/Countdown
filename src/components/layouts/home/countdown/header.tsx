@@ -9,7 +9,7 @@ const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <div className="w-full h-auto flex justify-between items-center pr-[30px] lg:pr-[64px] lg:pl-[31px] ">
+    <div className="w-full h-auto flex justify-between items-center pr-[30px] lg:pr-[64px] lg:pl-[31px]">
       <div className="w-[244.46px] h-[86px] md:w-[245px] md:h-[86.5px] lg:w-[348px] lg:h-[122px]">
         <Image
           src={"/images/whitelog.png"}
@@ -38,7 +38,7 @@ const Header = () => {
       </div>
 
       <div
-        className={`fixed top-0 left-0 w-full h-[50vh] bg-white text-white items-center flex justify-between md:flex lg:hidden flex-col gap-6 transition-transform duration-500 rounded-b-[16px]   ease-in-out ${
+        className={`fixed top-0 left-0 w-full h-[50vh] bg-white text-white items-center flex justify-between z-30 md:flex lg:hidden flex-col gap-6 transition-transform duration-500 rounded-b-[16px]   ease-in-out ${
           menuOpen ? "translate-y-0" : "-translate-y-full"
         }`}
       >
@@ -51,15 +51,15 @@ const Header = () => {
           />
         </div>
 
-        <div className=" w-full flex flex-col gap-4 px-[36px] py-[46px]">
+        <div className=" w-full flex flex-col gap-4 px-[36px] py-[50px]">
           <PrimaryButton
             text="Contact Us"
-            className="bg-black text-white hover:scale-95 transition-transform duration-500 ease-in-out cursor-pointer font-normal rounded-[8px]  text-[16px] flex items-center justify-center"
+            className="bg-black text-white hover:scale-95 transition-transform duration-500 ease-in-out cursor-pointer font-normal rounded-[8px]  text-[16px] flex items-center justify-center w-full"
           />
 
           <PrimaryButton
             text="Close"
-            className="bg-white text-black cursor-pointer font-normal rounded-[8px] text-[16px] flex items-center justify-center hover:scale-95 transition-transform duration-500 ease-in-out border-[1px] border-black"
+            className="bg-white text-black cursor-pointer font-normal rounded-[8px] text-[16px] flex items-center justify-center hover:scale-95 transition-transform duration-500 ease-in-out border-[1px] border-black w-full"
             action={() => setMenuOpen(false)}
           />
         </div>
