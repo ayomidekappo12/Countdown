@@ -1,22 +1,21 @@
-'use client'
-import React, { use } from 'react'
-import Image from 'next/image'
-import { Mail, Menu  } from 'lucide-react';
-import { useState } from 'react';
-import PrimaryButton from '@/components/PrimaryButton';
+"use client";
+import React from "react";
+import Image from "next/image";
+import { Mail, Menu } from "lucide-react";
+import { useState } from "react";
+import PrimaryButton from "@/components/PrimaryButton";
 
 const Header = () => {
-    const [menuOpen, setMenuOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="w-full h-auto flex justify-between items-center pr-[30px] lg:pr-[64px] lg:pl-[31px]">
-      <div className="w-[244.46px] h-[86px] md:w-[245px] md:h-[86.5px] lg:w-[348px] lg:h-[122px]">
+    <div className="w-full h-auto flex flex-row justify-between items-center pr-[30px] lg:pr-[64px] lg:pl-[31px] py-[8px]">
+      <div className="w-fit h-auto">
         <Image
           src={"/images/whitelog.png"}
           alt="Logo"
-          className=""
-          width={50}
-          height={50}
+          width={226}
+          height={60}
         />
       </div>
 
@@ -38,7 +37,7 @@ const Header = () => {
       </div>
 
       <div
-        className={`fixed top-0 left-0 w-full h-[50vh] bg-white text-white items-center flex justify-between z-30 md:flex lg:hidden flex-col gap-6 transition-transform duration-500 rounded-b-[16px]   ease-in-out ${
+        className={`fixed top-0 left-0 w-full h-[35vh] md:h-[22vh] bg-white text-white items-center flex justify-between z-30 md:flex lg:hidden flex-col gap-6 transition-transform duration-500 rounded-b-[16px]   ease-in-out ${
           menuOpen ? "translate-y-0" : "-translate-y-full"
         }`}
       >
@@ -46,12 +45,12 @@ const Header = () => {
           <Image
             src="/images/purplelogo.png"
             alt="logo2"
-            width={100}
-            height={100}
+            width={152}
+            height={40}
           />
         </div>
 
-        <div className=" w-full flex flex-col gap-4 px-[36px] py-[50px]">
+        <div className=" w-full flex flex-col gap-4 px-[36px] pb-4">
           <PrimaryButton
             text="Contact Us"
             className="bg-black text-white hover:scale-95 transition-transform duration-500 ease-in-out cursor-pointer font-normal rounded-[8px]  text-[16px] flex items-center justify-center w-full"
@@ -66,6 +65,6 @@ const Header = () => {
       </div>
     </div>
   );
-}
+};
 
-export default Header
+export default Header;
