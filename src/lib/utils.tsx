@@ -11,6 +11,19 @@ export const api = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}`,
 });
 
+// utils/debug.ts
+export const debugLog = (...args: any[]) => {
+  if (process.env.NODE_ENV === "development") {
+    console.log(...args);
+  }
+};
+
+export const debugError = (...args: any[]) => {
+  if (process.env.NODE_ENV === "development") {
+    console.error(...args);
+  }
+};
+
 export const fetcher = async (url: string) => {
   const token = JSON.parse(await getSessionData()).aut;
   const config = token

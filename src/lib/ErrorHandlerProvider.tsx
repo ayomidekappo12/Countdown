@@ -1,24 +1,18 @@
 import { useContext, createContext, ReactNode } from "react";
-//import { useAuth } from "./AuthProvider";
 
-const ErrorHandlerContext = createContext((error: any) => {
-  //log
-  console.log(error.message);
-});
+const ErrorHandlerContext = createContext<((error: any) => void) | undefined>(undefined);
 
 interface ErrorHandlerProviderProps {
   children?: ReactNode;
 }
 
 export const ErrorProvider = ({ children }: ErrorHandlerProviderProps) => {
-  //const auth = useAuth();
 
   const handleError = (error: any) => {
-    //log
     console.log(error.message);
 
-    if (error.code == 401) {
-      //auth.logout();
+    if (error.code === 401) {
+      // auth.logout();
     }
   };
 
@@ -30,5 +24,9 @@ export const ErrorProvider = ({ children }: ErrorHandlerProviderProps) => {
 };
 
 export const useErrorHandler = () => {
-  return useContext(ErrorHandlerContext);
+  const context = useContext(ErrorHandlerContext);
+  if (!context) {
+    throw new Error("useErrorHandler must be used within an <ErrorProvider>");
+  }
+  return context;
 };
