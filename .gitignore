@@ -36,6 +36,11 @@ Thumbs.db
 /.next/
 /out/
 
+# generated/reference material
+.agents/
+.claude/
+.windsurf/
+
 # misc
 .DS_Store
 *.pem
