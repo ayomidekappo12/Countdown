@@ -2,7 +2,7 @@ const {
     createWaitlistEntry
 } = require('../services/waitlist.service');
 
-const createWaitlist = async (req, res) => {
+const createWaitlist = async (req, res, next) => {
     try {
         const { firstName, email } = req.body;
         const subscriber = await createWaitlistEntry({ firstName, email });
