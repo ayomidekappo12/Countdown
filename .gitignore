@@ -36,6 +36,11 @@ Thumbs.db
 /.next/
 /out/
 
+# generated/reference material
+.agents/
+.claude/
+.windsurf/
+
 # misc
 .DS_Store
 *.pem
@@ -53,3 +58,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/generated/prisma
