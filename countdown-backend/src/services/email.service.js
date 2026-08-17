@@ -58,7 +58,7 @@ const sendAdminNotification = async ({ firstName, email, createdAt }) => {
 
         <p>
           <strong>Name:</strong>
-          ${firstName} ${lastName}
+          ${firstName}
         </p>
 
         <p>

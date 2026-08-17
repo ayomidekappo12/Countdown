@@ -13,7 +13,6 @@ CREATE TABLE "User" (
 CREATE TABLE "Waitlist" (
     "id" SERIAL NOT NULL,
     "firstName" TEXT NOT NULL,
-    "lastName" TEXT,
     "email" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -25,3 +24,6 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Waitlist_email_key" ON "Waitlist"("email");
+
+-- CreateIndex
+CREATE INDEX "Waitlist_createdAt_idx" ON "Waitlist"("createdAt");

@@ -61,7 +61,7 @@ function SubscribeForm({ onSuccess }: SubscribeFormProps) {
       debugLog("Form submitted:", data);
       const { firstName, email } = data;
 
-      const response = await instance.post("/subscribe", {
+      const response = await instance.post("/api/waitlist", {
         name: firstName,
         email,
       });
