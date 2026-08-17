@@ -14,10 +14,13 @@ model User {
   createdAt DateTime @default(now())
 }
 
+
 model Waitlist {
   id        Int      @id @default(autoincrement())
   firstName String
   email     String   @unique
   createdAt DateTime @default(now())
+
+  @@index([createdAt])
 }
 

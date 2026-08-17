@@ -10,18 +10,54 @@ import { useState, useEffect } from "react";
 type WaitlistModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  position?: number;
+  referralCode?: string;
+  totalSubscribers?: number;
 };
 
 export default function WaitlistModal({
   open,
   onOpenChange,
+  position,
+  referralCode,
+  totalSubscribers,
 }: WaitlistModalProps) {
-  const shareLink = "https://synaradev.com/ref?=984";
+  const shareLink = referralCode
+    ? `https://synaradev.com/ref?=${referralCode}`
+    : "https://synaradev.com/ref?=984";
   const [copied, setCopied] = useState(false);
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(shareLink);
-    setCopied(true);
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(shareLink);
+      setCopied(true);
+    } catch (error) {
+      console.error("Failed to copy referral link:", error);
+    }
+  };
+
+  const shareOnX = () => {
+    const text = encodeURIComponent(
+      "I just joined the SynaraDev waitlist. Join me!",
+    );
+
+    const url = encodeURIComponent(shareLink);
+
+    window.open(
+      `https://x.com/intent/post?text=${text}&url=${url}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+  };
+
+  const shareOnLinkedIn = () => {
+    const url = encodeURIComponent(shareLink);
+
+    window.open(
+      `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
   };
 
   useEffect(() => {
@@ -60,12 +96,16 @@ export default function WaitlistModal({
           <div className="border border-[#C7B7E0] rounded-b-[26.1px] rounded-t-[11.31px] p-3 inline-block text-sm shadow-md text-pretty">
             You&apos;re <br />
             <span className="text-purple-400 font-semibold">
-              #1,284
-            </span> On <br /> The List
+              #{position?.toLocaleString()}
+            </span>{" "}
+            On <br /> The List
           </div>
           <p className="text-xs mt-2 text-white">
-            A Total Of <span className="font-medium">1,284 Founders</span> Have
-            Joined SynaraDev&apos;s Waitlist So Far
+            A Total Of{" "}
+            <span className="font-medium">
+              {totalSubscribers?.toLocaleString()} Founders
+            </span>{" "}
+            Have Joined SynaraDev&apos;s Waitlist So Far
           </p>
         </div>
 
@@ -99,13 +139,16 @@ export default function WaitlistModal({
 
         <div className="w-full h-auto flex justify-center gap-2 mb-4">
           <Button
+            onClick={shareOnX}
             size="sm"
             variant="outline"
             className="w-[50%] border-[#CEC6C6] bg-transparent text-white"
           >
             Share On X
           </Button>
+
           <Button
+            onClick={shareOnLinkedIn}
             size="sm"
             variant="outline"
             className="w-[50%] bg-transparent border-[#CEC6C6] text-white"
