@@ -125,7 +125,9 @@ export default function WaitlistModal({
             size="sm"
             variant="secondary"
             className="bg-transparent hover:text-black hover:bg-white transition-all duration-500 ease-in-out text-white border"
-            onClick={copyToClipboard}
+            onClick={() => {
+              void copyToClipboard();
+            }}
           >
             <Copy className="w-4 h-4" /> Copy
           </Button>

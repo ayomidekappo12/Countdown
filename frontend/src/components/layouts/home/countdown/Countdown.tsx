@@ -1,9 +1,10 @@
 "use client";
 
 import instance from "@/api/axios";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { toast } from "sonner";
@@ -75,16 +76,19 @@ function SubscribeForm({ onSuccess }: SubscribeFormProps) {
 
       form.reset();
       if (onSuccess) onSuccess(); // trigger modal
-    } catch (error: any) {
+    } catch (error: unknown) {
       debugError("Submission error", error);
 
-      const backendMessage =
-        error?.response?.data?.message ||
-        "Something went wrong. Please try again later.";
+      const backendMessage = axios.isAxiosError<{ message?: string }>(error)
+        ? error.response?.data?.message
+        : undefined;
 
-      toast(backendMessage, {
-        icon: "❌",
-      });
+      toast(
+        backendMessage ?? "Something went wrong. Please try again later.",
+        {
+          icon: "❌",
+        },
+      );
     } finally {
       setLoading(false);
     }
@@ -93,7 +97,9 @@ function SubscribeForm({ onSuccess }: SubscribeFormProps) {
   return (
     <Form {...form}>
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={(event) => {
+          void handleSubmit(onSubmit)(event);
+        }}
         aria-label="Subscribe to updates"
         className="w-full"
       >
@@ -274,8 +280,8 @@ const CountDownComponent = () => {
             We are launching soon!
           </h1>
           <p className="mt-5 px-6 sm:px-0 text-sm sm:text-base md:text-xl lg:text-2xl font-light text-pretty text-center wrap-anywhere">
-            We're almost there! Want to be the first to know when we launch?
-            Subscribe to our mailing list.
+            We&apos;re almost there! Want to be the first to know when we
+            launch? Subscribe to our mailing list.
           </p>
         </div>
 
