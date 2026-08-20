@@ -8,6 +8,7 @@ import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { toast } from "sonner";
+import Image from "next/image";
 import Footer from "./footer";
 import Header from "./header";
 const WaitlistModal = dynamic(() => import("./waitlist"), { ssr: false });
@@ -293,7 +294,7 @@ const CountDownComponent = () => {
                 key={index}
                 className="flex space-x-1 text-xs md:text-sm lg:text-base font-extralight leading-relaxed"
               >
-                <img
+                <Image
                   src="/images/material-symbols_star.png"
                   alt="Star"
                   className="mt-0 sm:mt-0.5 w-5 h-5 shrink-0"
