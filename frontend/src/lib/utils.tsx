@@ -1,46 +1,66 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 import { getSessionData } from "@/app/actions";
 import axios from "axios";
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+export function cn(...inputs: ClassValue[]): string {
+  return twMerge(clsx(inputs));
 }
 
 export const api = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}`,
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
 });
 
-// utils/debug.ts
-export const debugLog = (...args: any[]) => {
+type SessionData = {
+  aut?: string;
+  role?: string;
+};
+
+type ApiErrorResponse = {
+  message?: string;
+  detail?: string;
+  code?: string | number;
+};
+
+export const debugLog = (...args: unknown[]): void => {
   if (process.env.NODE_ENV === "development") {
     console.log(...args);
   }
 };
 
-export const debugError = (...args: any[]) => {
+export const debugError = (...args: unknown[]): void => {
   if (process.env.NODE_ENV === "development") {
     console.error(...args);
   }
 };
 
-export const fetcher = async (url: string) => {
-  const token = JSON.parse(await getSessionData()).aut;
-  const config = token
+export async function fetcher<T = unknown>(url: string): Promise<T> {
+  const sessionData = await getSessionData();
+  const session = JSON.parse(sessionData) as SessionData;
+
+  const config = session.aut
     ? {
         headers: {
-          Authorization: "Bearer " + token,
+          Authorization: `Bearer ${session.aut}`,
         },
       }
-    : {};
+    : undefined;
 
-  return api
-    .get(url, config)
-    .then((res) => res.data)
-    .catch((exception: any) => {
-      const error = new Error(exception.message);
-      error.message = exception.detail;
-      error.cause = exception.code;
-      throw error;
-    });
-};
+  try {
+    const response = await api.get<T>(url, config);
+    return response.data;
+  } catch (error: unknown) {
+    if (axios.isAxiosError<ApiErrorResponse>(error)) {
+      const data = error.response?.data;
+
+      const apiError = new Error(
+        data?.message ?? data?.detail ?? error.message,
+      );
+
+      apiError.cause = data?.code;
+      throw apiError;
+    }
+
+    throw error;
+  }
+}
