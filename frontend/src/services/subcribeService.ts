@@ -22,7 +22,10 @@ export async function subscribeUser(
   data: SubscribeData,
 ): Promise<SubscribeResponse> {
   try {
-    const response = await instance.post<SubscribeResponse>("/subscribe", data);
+    const response = await instance.post<SubscribeResponse>(
+      "/api/waitlist",
+      data,
+    );
 
     return response.data;
   } catch (error: unknown) {
