@@ -1,30 +1,12 @@
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 
-const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST,
-  port: Number(process.env.EMAIL_PORT),
-  secure: Number(process.env.EMAIL_PORT) === 465,
-
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-});
-
-
- // Verify that the SMTP server is reachable
- // And the configured credentials are valid.
-
-const verifyEmailConnection = async () => {
-  await transporter.verify();
-};
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendSubscriberConfirmation = async ({ firstName, email }) => {
-  await transporter.sendMail({
+  const { data, error } = await resend.emails.send({
     from: process.env.EMAIL_FROM,
     to: email,
     replyTo: process.env.EMAIL_REPLY_TO,
-
     subject: "You're on the waitlist! 🎉",
 
     text: `
@@ -60,15 +42,20 @@ The Countdown Team
       </div>
     `,
   });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
 };
 
 const sendAdminNotification = async ({ firstName, email, createdAt }) => {
-  await transporter.sendMail({
+  const { data, error } = await resend.emails.send({
     from: process.env.EMAIL_FROM,
     to: process.env.ADMIN_EMAIL,
     replyTo: process.env.EMAIL_REPLY_TO,
-
-    subject: "New countdown waitlist signup",
+    subject: "New Countdown Waitlist Signup",
 
     text: `
 New subscriber joined the countdown waitlist.
@@ -103,10 +90,15 @@ Signed up date: ${createdAt}
       </div>
     `,
   });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
 };
 
 module.exports = {
-  verifyEmailConnection,
   sendSubscriberConfirmation,
   sendAdminNotification,
 };
