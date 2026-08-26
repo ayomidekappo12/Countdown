@@ -1,48 +1,74 @@
 // business logic.
 
-const prisma = require('../lib/prisma');
+const prisma = require("../lib/prisma");
 
 const {
-    sendSubscriberConfirmation,
-    sendAdminNotification
-} = require('./email.service');
+  sendSubscriberConfirmation,
+  sendAdminNotification,
+} = require("./email.service");
 
 const createWaitlistEntry = async ({ firstName, email }) => {
-    // check whether email already exists
-    const existingSubscriber = await prisma.waitlist.findUnique({
-        where: { email }
-    });
+  // Check whether the email already exists
+  const existingSubscriber = await prisma.waitlist.findUnique({
+    where: { email },
+  });
 
-    if (existingSubscriber) {
-        const error = new Error("This email is already on the waitlist.");
-        error.statusCode = 409;
-        throw error;
+  if (existingSubscriber) {
+    const error = new Error("This email is already on the waitlist.");
+
+    error.statusCode = 409;
+
+    throw error;
+  }
+
+  // Create the database record first
+  let subscriber;
+
+  try {
+    subscriber = await prisma.waitlist.create({
+      data: {
+        firstName,
+        email,
+      },
+    });
+  } catch (error) {
+    // Handle Prisma unique constraint race condition
+    if (error.code === "P2002") {
+      const duplicateError = new Error(
+        "This email is already on the waitlist.",
+      );
+
+      duplicateError.statusCode = 409;
+
+      throw duplicateError;
     }
 
-    // create database record
-    const subscriber = await prisma.waitlist.create({
-        data: {
-            firstName,
-            email
-        }
-    });
-    
-    // send confirmation email to subscriber
+    throw error;
+  }
+
+  // Email failures should not undo a successful signup
+  try {
     await sendSubscriberConfirmation({
-        firstName: subscriber.firstName,
-        email: subscriber.email
+      firstName: subscriber.firstName,
+      email: subscriber.email,
     });
+  } catch (error) {
+    console.error("Failed to send subscriber confirmation:", error);
+  }
 
-    // send notification email to admin
+  try {
     await sendAdminNotification({
-        firstName: subscriber.firstName,
-        email: subscriber.email,
-        createdAt: subscriber.createdAt.toISOString()
+      firstName: subscriber.firstName,
+      email: subscriber.email,
+      createdAt: subscriber.createdAt.toISOString(),
     });
+  } catch (error) {
+    console.error("Failed to send admin notification:", error);
+  }
 
-    return subscriber;
-}
+  return subscriber;
+};
 
 module.exports = {
-    createWaitlistEntry
+  createWaitlistEntry,
 };
