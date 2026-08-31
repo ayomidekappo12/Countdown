@@ -6,13 +6,27 @@ const errorHandler = require("./middleware/error.middleware");
 
 const app = express();
 
+const allowedOrigins = new Set(
+  [process.env.FRONTEND_URL, "http://localhost:3000", "http://127.0.0.1:3000"]
+    .filter(Boolean)
+    .map((origin) => origin.replace(/\/$/, "")),
+);
+
 // Parse JSON request bodies
 app.use(express.json());
 
 // Enable CORS
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.has(origin.replace(/\/$/, ""))) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
   }),
 );
 

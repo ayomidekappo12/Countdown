@@ -256,7 +256,7 @@ const CountDownComponent = () => {
         <div className="flex flex-wrap sm:flex-nowrap gap-2 sm:gap-4 lg:gap-10 max-w-2xl max-h-28 justify-center items-center">
           {isLive ? (
             <div className="text-3xl md:text-5xl font-bold text-[#f1b841]">
-              🎉 We’re Live!
+              🎉 We&apos;re Live!
             </div>
           ) : (
             countdownItems.map((item, index) => (
@@ -295,8 +295,10 @@ const CountDownComponent = () => {
                 className="flex space-x-1 text-xs md:text-sm lg:text-base font-extralight leading-relaxed"
               >
                 <Image
-                  src="/images/material-symbols_star.png"
+                  src={"/images/material-symbols_star.png"}
                   alt="Star"
+                  width={100}
+                  height={100}
                   className="mt-0 sm:mt-0.5 w-5 h-5 shrink-0"
                   aria-hidden="true"
                 />
