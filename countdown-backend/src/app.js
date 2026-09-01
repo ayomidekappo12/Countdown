@@ -6,6 +6,8 @@ const errorHandler = require("./middleware/error.middleware");
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 const allowedOrigins = new Set(
   [process.env.FRONTEND_URL, "http://localhost:3000", "http://127.0.0.1:3000"]
     .filter(Boolean)
